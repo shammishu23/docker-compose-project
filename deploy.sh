@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "stopping old containers....."
+echo "stopping old containerss....."
 docker compose down
 
 echo "Building and starting  containers..."
