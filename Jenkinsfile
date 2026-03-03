@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "day8-python-app"
+        IMAGE_NAME = "sujithachadalavada/day8-python-app"
         IMAGE_TAG = "v1"
     }
 
@@ -22,12 +22,16 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                echo 'Building Docker image...'
-                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./app"
+     stage('Build & Push Image') {
+      steps {
+        script {
+            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub-creds') {
+                def appImage = docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}", "./app")
+                appImage.push()
             }
         }
+    }
+}
 
         stage('Deploy Application') {
             steps {
