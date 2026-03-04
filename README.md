@@ -6,3 +6,4 @@ Simple Python application containerized using Docker and managed with Docker Com
 - Dockerfile-based build
 - Docker Compose setup
 - Persistent storage using Docker volumes
+# test trigger
