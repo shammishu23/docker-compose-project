@@ -40,9 +40,10 @@ pipeline {
 
         stage('Deploy Application') {
             steps {
-                echo 'Deploying with Docker Compose...'
+                echo 'Deploying container from Docker Hub image...'
+                sh 'docker pull ${IMAGE_NAME}:${IMAGE_TAG}'
                 sh 'docker compose down'
-                sh 'docker compose up -d --build'
+                sh 'docker compose up -d'
             }
         }
     }
