@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "sujithachadalavada/day8-python-app"
-        IMAGE_TAG = "v1"
+        IMAGE_TAG = "build-${BUILD_NUMBER}"
     }
 
     stages {
@@ -40,7 +40,7 @@ pipeline {
 
         stage('Deploy Application') {
             steps {
-                echo 'Deploying container from Docker Hub image...'
+                echo 'Deploying latest image...'
                 sh 'docker pull ${IMAGE_NAME}:${IMAGE_TAG}'
                 sh 'docker compose down'
                 sh 'docker compose up -d'
