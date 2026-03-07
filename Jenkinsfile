@@ -38,15 +38,20 @@ pipeline {
     }
 }
 
-        stage('Deploy Application') {
-            steps {
-                echo 'Deploying latest image...'
-                sh 'docker pull ${IMAGE_NAME}:${IMAGE_TAG}'
-                sh 'docker compose down'
-                sh 'docker compose up -d'
-            }
+       stage('Deploy to EC2') {
+    steps {
+        sshagent(['ec2-ssh-key']) {
+            sh '''
+            ssh -o StrictHostKeyChecking=no ubuntu@43.205.95.221 "
+            docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
+            docker stop app || true &&
+            docker rm app || true &&
+            docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${IMAGE_TAG}
+            "
+            '''
         }
     }
+}
 
     post {
         success {
