@@ -48,10 +48,12 @@ pipeline {
                 docker rm app || true &&
                 docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${IMAGE_TAG}
                 "
-                '''
-        }
+               '''
+          }
+       }
     }
 }
+ 
 
     post {
         success {
@@ -61,4 +63,4 @@ pipeline {
             echo 'Pipeline failed. Check logs....'
         }
     }
-
+}
