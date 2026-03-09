@@ -42,13 +42,13 @@ pipeline {
         steps {
             sshagent(['ec2-ssh-key']) {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@13.232.197.6 << 'EOF'
-                docker pull ${IMAGE_NAME}:${IMAGE_TAG}
-                docker stop app || true
-                docker rm app || true
-                docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${IMAGE_TAG}
+                ssh -o StrictHostKeyChecking=no ubuntu@13.232.197.6 "
+                docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
+                docker stop app || true &&
+                docker rm app || true &&
+                docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${IMAGE_TAG} &&
                 docker image prune -f
-                'EOF'
+                "
                 '''
           }
        }
