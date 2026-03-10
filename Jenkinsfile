@@ -39,10 +39,12 @@ pipeline {
 }
 
     stage('Deploy to EC2') {
-        steps {
+        steps { 
+           
+            echo "Deploying version: ${IMAGE_TAG}"
             sshagent(['ec2-ssh-key']) {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@13.232.197.6 "
+                ssh -o StrictHostKeyChecking=no ubuntu@3.111.157.134 "
                 docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
                 docker stop app || true &&
                 docker rm app || true &&
