@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-    string(name: 'ROLLBACK_TAG', defaultValue: '', description: 'build-24')
+    string(name: 'ROLLBACK_TAG', defaultValue: '', description: 'Enter Docker image tag to rollback (example: build-24)')
    }
 
     environment {
