@@ -50,7 +50,7 @@ pipeline {
             echo "Deploying version: ${IMAGE_TAG}"
             sshagent(['ec2-ssh-key']) {
                 sh '''
-                ssh -o StrictHostKeyChecking=no ubuntu@3.111.157.134 "
+                ssh -o StrictHostKeyChecking=no ubuntu@43.205.206.185 "
                 docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
                 docker stop app || true &&
                 docker rm app || true &&
