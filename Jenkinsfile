@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+    string(name: 'ROLLBACK_TAG', defaultValue: '', description: 'build-24')
+   }
 
     environment {
         IMAGE_NAME = "sujithachadalavada/day8-python-app"
@@ -39,8 +42,11 @@ pipeline {
 }
 
     stage('Deploy to EC2') {
+       when {
+           expression { params.ROLLBACK_TAG?.trim() }
+        }
         steps { 
-           
+            echo "Rolling back to version: ${params.ROLLBACK_TAG}"
             echo "Deploying version: ${IMAGE_TAG}"
             sshagent(['ec2-ssh-key']) {
                 sh '''
