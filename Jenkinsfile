@@ -71,9 +71,7 @@ pipeline {
         failure {
             echo 'Pipeline failed. Check logs....'
         }
-    }
-  post {
-    success {
+   success {
         emailext(
             subject: "Jenkins Build SUCCESS",
             body: "Build ${BUILD_NUMBER} succeeded. Application deployed successfully.",
@@ -87,5 +85,6 @@ pipeline {
             to: "your-email@gmail.com"
         )
     }
-}
+  }
+  
 }
