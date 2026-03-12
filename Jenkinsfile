@@ -68,27 +68,27 @@ pipeline {
     }
 
     post {
+    success {
+        emailext(
+            to: 'chadalavadasujitha8@gmail.com',
+            subject: "Jenkins Build SUCCESS #${BUILD_NUMBER}",
+            body: """
+Build SUCCESS
 
-        success {
-            echo 'Pipeline executed successfully!'
-
-            emailext(
-                subject: "Jenkins Build SUCCESS",
-                body: "Build ${BUILD_NUMBER} succeeded. Application deployed successfully.",
-                to: "chadalavadasujitha8@gmail.com"
-            )
-        }
-
-        failure {
-            echo 'Pipeline failed. Check logs....'
-
-            emailext(
-                subject: "Jenkins Build FAILED",
-                body: "Build ${BUILD_NUMBER} failed. Please check Jenkins logs.",
-                to: "chadalavadasujitha8@gmail.com"
-            )
-        }
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+URL: ${BUILD_URL}
+"""
+        )
     }
+    failure {
+        emailext(
+            to: 'chadalavadasujitha8@gmail.com',
+            subject: "Jenkins Build FAILED #${BUILD_NUMBER}",
+            body: "Build failed. Check Jenkins logs."
+        )
+    }
+}
 }
 
 
