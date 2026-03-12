@@ -76,6 +76,7 @@ pipeline {
                 subject: "Jenkins Build SUCCESS",
                 body: "Build ${BUILD_NUMBER} succeeded. Application deployed successfully.",
                 to: "chadalavadasujitha8@gmail.com"
+                from: "chadalavadasujitha8@gmail.com"
             )
         }
 
@@ -86,6 +87,7 @@ pipeline {
                 subject: "Jenkins Build FAILED",
                 body: "Build ${BUILD_NUMBER} failed. Please check Jenkins logs.",
                 to: "chadalavadasujitha8@gmail.com"
+                from: "chadalavadasujitha8@gmail.com"
             )
         }
     }
