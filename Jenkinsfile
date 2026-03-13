@@ -44,21 +44,19 @@ pipeline {
         }
 
         stage('Deploy to EC2') {
-            when {
-                expression { params.ROLLBACK_TAG?.trim() }
-            }
-
             steps {
-                echo "Rolling back to version: ${params.ROLLBACK_TAG}"
-
-                sshagent(['ec2-ssh-key']) {
+              script {
+                  def tag = params.ROLLBACK_TAG?.trim() ? params.ROLLBACK_TAG : IMAGE_TAG
+                  echo "Deploying image: ${tag}"
+              
+                  sshagent(['ec2-ssh-key']) {
 
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@13.201.66.185 "
-                    docker pull ${IMAGE_NAME}:${params.ROLLBACK_TAG} &&
-                    docker stop app || true &&
-                    docker rm app || true &&
-                    docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${params.ROLLBACK_TAG} &&
+                    ssh -o StrictHostKeyChecking=no ubuntu@13.126.44.170 "
+                    docker pull ${IMAGE_NAME}:${tag}
+                    docker stop app || true 
+                    docker rm app || true 
+                    docker run -d -p 5000:5000 --name app ${IMAGE_NAME}:${tag}
                     docker image prune -f
                     "
                     """
