@@ -64,7 +64,6 @@ pipeline {
             }
         }
     }
-}
 
 stage('Application Health Check'){
     steps {
@@ -75,7 +74,10 @@ stage('Application Health Check'){
         curl -f http://13.232.240.89:5000 || exit 1
         '''
     }
+  }
+
 }
+
 
     post {
     success {
