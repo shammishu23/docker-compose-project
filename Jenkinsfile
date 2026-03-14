@@ -66,6 +66,17 @@ pipeline {
     }
 }
 
+stage('Application Health Check'){
+    steps {
+        echo "Checking if application is running..."
+
+        sh '''
+        sleep 10
+        curl -f http://13.232.240.89:5000 || exit 1
+        '''
+    }
+}
+
     post {
     success {
         emailext(
