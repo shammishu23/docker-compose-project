@@ -52,7 +52,7 @@ pipeline {
                   sshagent(['ec2-ssh-key']) {
 
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@13.126.44.170 "
+                    ssh -o StrictHostKeyChecking=no ubuntu@13.232.240.89 "
                     docker pull ${IMAGE_NAME}:${tag}
                     docker stop app || true 
                     docker rm app || true 
