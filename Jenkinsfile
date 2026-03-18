@@ -81,26 +81,25 @@ stage('Application Health Check'){
 
     post {
     success {
-        emailext(
-            to: 'chadalavadasujitha8@gmail.com',
-            subject: "Jenkins Build SUCCESS #${BUILD_NUMBER}",
-            body: """
-Build SUCCESS
-
-Job: ${JOB_NAME}
-Build Number: ${BUILD_NUMBER}
-URL: ${BUILD_URL}
-"""
-        )
+        withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_WEBHOOK')]) {
+    sh '''
+    curl -X POST -H 'Content-type: application/json' \
+    --data '{"text":"✅ Build SUCCESS"}' \
+    $SLACK_WEBHOOK
+    '''
+}
     }
     failure {
-        emailext(
-            to: 'chadalavadasujitha8@gmail.com',
-            subject: "Jenkins Build FAILED #${BUILD_NUMBER}",
-            body: "Build failed. Check Jenkins logs."
-        )
-    }
-}
+        withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_WEBHOOK')]) {
+    sh '''
+    curl -X POST -H 'Content-type: application/json' \
+    --data '{"text":"✅ Build FAILED"}' \
+    $SLACK_WEBHOOK
+    '''
+     }
+   }
+
+  }
 }
 
 
