@@ -52,7 +52,7 @@ pipeline {
                   sshagent(['ec2-ssh-key']) {
 
                     sh """
-                    ssh -o StrictHostKeyChecking=no ubuntu@13.232.240.89 "
+                    ssh -o StrictHostKeyChecking=no ubuntu@13.201.56.30 "
                     docker pull ${IMAGE_NAME}:${tag}
                     docker stop app || true 
                     docker rm app || true 
@@ -71,7 +71,7 @@ stage('Application Health Check'){
 
         sh '''
         sleep 10
-        curl -f http://13.232.240.89:5000 || exit 1
+        curl -f http://13.201.56.30:5000 || exit 1
         '''
     }
   }
@@ -84,7 +84,7 @@ stage('Application Health Check'){
         withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_WEBHOOK')]) {
     sh '''
     curl -X POST -H 'Content-type: application/json' \
-    --data '{"text":"✅ Build SUCCESS"}' \
+    --data '{"text":"Build SUCCESS"}' \
     $SLACK_WEBHOOK
     '''
 }
@@ -93,7 +93,7 @@ stage('Application Health Check'){
         withCredentials([string(credentialsId: 'slack-webhook', variable: 'SLACK_WEBHOOK')]) {
     sh '''
     curl -X POST -H 'Content-type: application/json' \
-    --data '{"text":"✅ Build FAILED"}' \
+    --data '{"text":"Build FAILED"}' \
     $SLACK_WEBHOOK
     '''
      }
