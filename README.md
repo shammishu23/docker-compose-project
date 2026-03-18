@@ -1,3 +1,6 @@
+<img width="791" height="346" alt="endtoendpipeline drawio" src="https://github.com/user-attachments/assets/8cdd89e6-80a5-445b-912a-a84e282f9b4d" />
+
+
 # DevOps CI/CD Pipeline Project 
 
 This project demonstrates a complete CI/CD pipeline using Jenkins, Docker, and AWS EC2.
